@@ -6,26 +6,38 @@ import com.example.android.dagger.storage.Storage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import javax.inject.Qualifier
 
-// Tells Dagger this is a Dagger module
-// Because of @Binds, StorageModule needs to be an abstract class
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class RegistrationStorage
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class LoginStorage
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class DefaultStorage
+
 @Module
-/*abstract*/ class StorageModule {
+class StorageModule {
 
-    // Makes Dagger provide SharedPreferencesStorage when a Storage type is requested
-//    @Binds
-//    abstract fun provideStorage(storage: SharedPreferencesStorage): Storage
-
-    // @Provides tell Dagger how to create instances of the type that this function
-    // returns (i.e. Storage).
-    // Function parameters are the dependencies of this type (i.e. Context).
+    @RegistrationStorage
     @Provides
-    fun provideStorage(context: Context): Storage {
-        // Whenever Dagger needs to provide an instance of type Storage,
-        // this code (the one inside the @Provides method) will be run.
+    fun provideRegistrationStorage(context: Context): Storage {
+        return SharedPreferencesStorage("registration", context)
+    }
 
-        // Useful for when we're referencing code not owned by us, for instance Retrofit,
-        // otherwise it's better to use @Binds
-        return SharedPreferencesStorage(context)
+    @LoginStorage
+    @Provides
+    fun provideLoginStorage(context: Context): Storage {
+        return SharedPreferencesStorage("login", context)
+    }
+
+    @DefaultStorage
+    @Provides
+    fun provideDefaultStorage(context: Context) : Storage {
+        return SharedPreferencesStorage("Dagger", context)
     }
 }
