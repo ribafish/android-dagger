@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
 
 // 2) Grab userManager from appComponent to check if the user is logged in or not
         val userManager = (application as MyApplication).appComponent.userManager()
