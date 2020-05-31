@@ -8,6 +8,7 @@ import com.example.android.dagger.registration.RegistrationComponent
 import com.example.android.dagger.registration.enterdetails.EnterDetailsFragment
 import com.example.android.dagger.registration.termsandconditions.TermsAndConditionsFragment
 import com.example.android.dagger.settings.SettingsActivity
+import com.example.android.dagger.splash.SplashActivity
 import com.example.android.dagger.user.UserComponent
 import com.example.android.dagger.user.UserManager
 import dagger.BindsInstance
@@ -30,6 +31,7 @@ interface AppComponent {
     // Types that can be retrieved from the graph
     fun registrationComponent(): RegistrationComponent.Factory
     fun loginComponent(): LoginComponent.Factory
+    fun inject(activity: SplashActivity)
 
     // can access a particular instance of UserComponent
     fun userManager(): UserManager
